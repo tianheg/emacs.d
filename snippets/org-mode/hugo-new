@@ -1,0 +1,7 @@
+# -*- coding: utf-8; mode: snippet -*-
+# name : Create New Blog
+# key: N
+# --
+#+TITLE: $0
+#+DATE: 
+#+TAGS[]:
