@@ -101,10 +101,10 @@
     (define-key vertico-map (kbd "M-d") #'vertico-directory-delete-char)))
 
 ;; LSP Support with Eglot
-(use-package eglot
-  :hook (prog-mode . eglot-ensure)
-  :init
-  (defalias 'start-lsp-server #'eglot))
+;(use-package eglot
+;  :hook (prog-mode . eglot-ensure)
+;  :init
+;  (defalias 'start-lsp-server #'eglot))
 
 ;; format code
 (use-package format-all
@@ -173,10 +173,12 @@
 
 (use-package yasnippet
   :ensure t
+  :commands (yas-reload-all)
+  :hook ((org-mode . yas-minor-mode)
+         (markdown-mode . yas-minor-mode)
+         (prog-mode . yas-minor-mode))
   :config
-  (yas-reload-all)
-  :init
-  (add-hook 'org-mode-hook #'yas-minor-mode)); Enable yasnippet in org-mode buffers
+  (yas-reload-all))
 
 (use-package copilot
   :straight (:host github :repo "copilot-emacs/copilot.el" :files ("dist" "*.el"))

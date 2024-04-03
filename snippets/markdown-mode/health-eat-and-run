@@ -1,8 +1,8 @@
 # -*- coding: utf-8; mode: snippet -*-
-# name : add 'eat and run' entry
+# name: add 'eat and run' entry
 # key: EAR
 # --
-- 早晨：
+- 早晨：$1
 - 中午：
 - 晚上：
 - 跑步：:house::running:
