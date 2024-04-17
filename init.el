@@ -78,6 +78,16 @@
 ;; Optional
 (setq use-package-always-ensure t)
 
+;; org
+;; 使用 use-package 配置 org-mode
+(use-package org
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook 'turn-on-auto-fill)
+  (setq org-fill-column 80)
+  (add-hook 'org-mode-hook (lambda () (setq-local fill-column org-fill-column)))
+)
+
 ;; magit
 (use-package magit
   :ensure t
