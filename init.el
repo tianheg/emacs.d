@@ -78,15 +78,6 @@
 ;; Optional
 (setq use-package-always-ensure t)
 
-;; org
-;; 使用 use-package 配置 org-mode
-(use-package org
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook 'turn-on-auto-fill)
-  (setq org-fill-column 80)
-  (add-hook 'org-mode-hook (lambda () (setq-local fill-column org-fill-column)))
-)
 
 ;; magit
 (use-package magit
@@ -132,36 +123,6 @@
 ;; Inline static analysis with Flymake
 (add-hook 'prog-mode-hook #'flymake-mode)
 
-;; Git client with Magit
-(use-package magit
-  :bind ("C-c g" . magit-status))
-
-;; Indication of local VCS changes with diff-hl
-(use-package diff-hl
-  :hook (prog-mode . diff-hl-mode))
-
-;; Go Support
-(use-package go-mode)
-
-;; JSON Support
-(use-package json-mode)
-
-;; Typescript Support
-(use-package typescript-mode)
-
-;; Markdown support
-(use-package markdown-mode
-  :ensure t
-    :commands (markdown-mode gfm-mode)
-    :mode (("README\\.md\\'" . gfm-mode)
-      ("\\.md\\'" . markdown-mode)
-      ("\\.markdown\\'" . markdown-mode)))
-
-;; EditorConfig support
-(use-package editorconfig
-  :config
-  (editorconfig-mode t))
-
 ;; Miscellaneous options
 ;;; This sets the default major mode for new buffers.
 ;;; The lambda function provided will be used to guess the major mode based on the file name.
@@ -190,22 +151,9 @@
   :config
   (yas-reload-all))
 
-(use-package copilot
-  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("dist" "*.el"))
-  :bind (:map copilot-mode-map (("TAB" . copilot-accept-completion)
-                                 ("C-c 0 <down>" .  copilot-next-completion)
-                                 ("C-c 0 <up>" . copilot-previous-completion)
-                                 ("C-c 0 DEL" . copilot-clear-overlay)
-                                 ("C-c 0 TAB" . copilot-panel-complete)
-                                 ("C-c 0 ESC" . copilot-mode)))
-  :bind ("C-c 0 ESC" . copilot-mode)
-  :custom
-  ;; Copilot...never give me code comment recommendations.
-  (copilot-disable-predicates '(er--point-is-in-comment-p))
-  (copilot-idle-delay 1.5)
-  :ensure t)
-
 ;; Store automatic customisation options elsewhere
 (setq custom-file (locate-user-emacs-file "custom.el"))
 (when (file-exists-p custom-file)
   (load custom-file))
+
+(global-wakatime-mode)

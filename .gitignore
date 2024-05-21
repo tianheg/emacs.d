@@ -10,6 +10,7 @@ anaconda-mode/
 /.session
 /session.*
 .custom.el
+custom.el
 *.elc
 company-statistics-cache.el
 CVS
@@ -76,3 +77,4 @@ games
 timelog
 eaf
 straight
+projects
