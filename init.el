@@ -12,8 +12,10 @@
 
 ;; Enable automatic indentation
                                         ;(electric-indent-mode t)
-(setq-default standard-indent 2)
-(setq-default indent-tabs-mode nil)
+;(setq-default standard-indent 2)
+;(setq-default indent-tabs-mode nil)
+(add-hook 'org-mode-hook (lambda () (electric-indent-local-mode -1)))
+
 ;; Automatically pair parentheses
 (electric-pair-mode t)
 
@@ -80,9 +82,9 @@
 
 
 ;; magit
-(use-package magit
-  :ensure t
-  :commands (magit-status magit-get-current-branch))
+;(use-package magit
+;  :ensure t
+;  :commands (magit-status magit-get-current-branch))
 
 ;; theme
 (use-package zenburn-theme
@@ -107,21 +109,8 @@
 ;  :init
 ;  (defalias 'start-lsp-server #'eglot))
 
-;; format code
-(use-package format-all
-  :preface
-  (defun ian/format-code ()
-    "Auto-format whole buffer."
-    (interactive)
-    (if (derived-mode-p 'prolog-mode)
-        (prolog-indent-buffer)
-      (format-all-buffer)))
-  :config
-  (global-set-key (kbd "M-F") #'ian/format-code)
-  (add-hook 'prog-mode-hook #'format-all-ensure-formatter))
-
 ;; Inline static analysis with Flymake
-(add-hook 'prog-mode-hook #'flymake-mode)
+;(add-hook 'prog-mode-hook #'flymake-mode)
 
 ;; Miscellaneous options
 ;;; This sets the default major mode for new buffers.
@@ -156,4 +145,3 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
-(global-wakatime-mode)
