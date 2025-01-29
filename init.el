@@ -1,8 +1,5 @@
 ;; -*- coding: utf-8; lexical-binding: t; -*-
 
-;; Set the default font
-(set-face-attribute 'default nil :font "Monospace")
-
 ;; Enable line numbers
 (global-display-line-numbers-mode)
 ; (add-hook 'prog-mode-hook #'display-line-numbers-mode)
@@ -25,42 +22,45 @@
 ;; Enable auto-save files
 (setq auto-save-default t)
 
-;; Disable the menu bar
 (menu-bar-mode -1)
-
-;; Disable the tool bar
+(scroll-bar-mode -1)
 (tool-bar-mode -1)
 
-;; Disable the scroll bars
-(scroll-bar-mode -1)
+;; only works at Emacs GUI
+(let ((mono-spaced-font "Monospace")
+      (proportionately-spaced-font "Sans"))
+  (set-face-attribute 'default nil :family mono-spaced-font :height 100)
+  (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 1.0)
+  (set-face-attribute 'variable-pitch nil :family proportionately-spaced-font :height 1.0))
 
 ;; Disable startup message
 (setq inhibit-startup-message t)
 
 ;; http://yummymelon.com/devnull/surprise-and-emacs-defaults.html
-(delete-selection-mode t)
+
 (setq sentence-end-double-space nil)
 (setq dired-auto-revert-buffer t)
 
 ;; Add welcome msg
-(setq initial-scratch-message "archie, Emacs loves you!\n")
+(setq initial-scratch-message "archie, Emacs loves you!")
 
 ;; package
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("gnu" . "https://elpa.gnu.org/packages/")))
-(package-initialize)
+; (package-initialize) not require
 
-(unless package-archive-contents
-  (package-refresh-contents))
+(when (< emacs-major-version 29)
+  (unless (package-installed-p 'use-package)
+    (unless package-archive-contents
+      (package-refresh-contents))
+    (package-install 'use-package)))
 
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
+(add-to-list 'display-buffer-alist
+             '("\\`\\*\\(Warnings\\|Compile-Log\\)\\*\\'"
+               (display-buffer-no-window)
+               (allow-no-window . t)))
 
-(eval-when-compile
-  (require 'use-package))
-
-(defvar bootstrap-version)
 (defvar bootstrap-version)
 (let ((bootstrap-file
         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -77,14 +77,9 @@
 (setq straight-repository-branch "develop")
 (straight-use-package 'use-package)
 
-;; Optional
-(setq use-package-always-ensure t)
-
-
-;; magit
-;(use-package magit
-;  :ensure t
-;  :commands (magit-status magit-get-current-branch))
+(use-package delsel
+  :ensure nil ; no need to install it as it is built-in
+  :hook (after-init . delete-selection-mode))
 
 ;; theme
 (use-package zenburn-theme
@@ -93,15 +88,97 @@
   ;; Load the theme after `use-package` installs it
   (load-theme 'zenburn t))
 
+;; archlinux need install otf-monaspace-nerd pkg
+;; type M-x and then call the command nerd-icons-install-fonts
+(use-package nerd-icons
+  :ensure t)
+(use-package nerd-icons-completion
+  :ensure t
+  :after marginalia
+  :config
+  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
+(use-package nerd-icons-corfu
+  :ensure t
+  :after corfu
+  :config
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+(use-package nerd-icons-dired
+  :ensure t
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
+
 ;; Vertico for completion
 (use-package vertico
-  :init
-  (vertico-mode t)
+  :ensure t
+  :init (vertico-mode t)
   :config
   (with-eval-after-load 'vertico
     (define-key vertico-map (kbd "RET") #'vertico-directory-enter)
     (define-key vertico-map (kbd "DEL") #'vertico-directory-delete-word)
-    (define-key vertico-map (kbd "M-d") #'vertico-directory-delete-char)))
+    (define-key vertico-map (kbd "M-d") #'vertico-directory-delete-char))
+  :hook (after-init . vertico-mode))
+(use-package marginalia
+  :ensure t
+  :hook (after-init . marginalia-mode))
+(use-package orderless
+  :ensure t
+  :config
+  (setq completion-styles '(orderless basic))
+  (setq completion-category-defaults nil)
+  (setq completion-category-overrides nil))
+(use-package savehist
+  :ensure nil ; it is built-in
+  :hook (after-init . savehist-mode))
+
+;; code completion
+(use-package corfu
+  :ensure t
+  :hook (after-init . global-corfu-mode)
+  :bind (:map corfu-map ("<tab>" . corfu-complete))
+  :config
+  (setq tab-always-indent 'complete)
+  (setq corfu-preview-current nil)
+  (setq corfu-min-width 20)
+
+  (setq corfu-popupinfo-delay '(1.25 . 0.5))
+  (corfu-popupinfo-mode 1) ; shows documentation after `corfu-popupinfo-delay'
+
+  ;; Sort by input history (no need to modify `corfu-sort-function').
+  (with-eval-after-load 'savehist
+    (corfu-history-mode 1)
+    (add-to-list 'savehist-additional-variables 'corfu-history)))
+
+;; file manager
+(use-package dired
+  :ensure nil
+  :commands (dired)
+  :hook
+  ((dired-mode . dired-hide-details-mode)
+   (dired-mode . hl-line-mode))
+  :config
+  (setq dired-recursive-copies 'always)
+  (setq dired-recursive-deletes 'always)
+  (setq delete-by-moving-to-trash t)
+  (setq dired-dwim-target t))
+(use-package dired-subtree
+  :ensure t
+  :after dired
+  :bind
+  ( :map dired-mode-map
+    ("<tab>" . dired-subtree-toggle)
+    ("TAB" . dired-subtree-toggle)
+    ("<backtab>" . dired-subtree-remove)
+    ("S-TAB" . dired-subtree-remove))
+  :config
+  (setq dired-subtree-use-backgrounds nil))
+(use-package trashed
+  :ensure t
+  :commands (trashed)
+  :config
+  (setq trashed-action-confirmer 'y-or-n-p)
+  (setq trashed-use-header-line t)
+  (setq trashed-sort-key '("Date deleted" . t))
+  (setq trashed-date-format "%Y-%m-%d %H:%M:%S"))
 
 ;; LSP Support with Eglot
 ;(use-package eglot
@@ -140,10 +217,7 @@
   :config
   (yas-reload-all))
 
-;; Store automatic customisation options elsewhere
-(setq custom-file (locate-user-emacs-file "custom.el"))
-(when (file-exists-p custom-file)
-  (load custom-file))
+
 
 
 (use-package markdown-mode
@@ -152,3 +226,12 @@
   :init (setq markdown-command "multimarkdown")
   :bind (:map markdown-mode-map
          ("C-c C-e" . markdown-do)))
+
+(use-package org
+  :hook ((org-mode . visual-line-mode))
+  :custom
+  (org-startup-truncated nil))
+
+;; https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
+(setq custom-file (locate-user-emacs-file "custom.el"))
+(load custom-file :no-error-if-file-is-missing)
