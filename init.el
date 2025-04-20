@@ -88,7 +88,7 @@
   ;; Load the theme after `use-package` installs it
   (load-theme 'zenburn t))
 
-;; archlinux need install otf-monaspace-nerd pkg
+;; archlinux need install otf-monaspace-nerd,nerd-fonts-fontconfig pkg
 ;; type M-x and then call the command nerd-icons-install-fonts
 (use-package nerd-icons
   :ensure t)
