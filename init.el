@@ -8,10 +8,15 @@
 (global-font-lock-mode t)
 
 ;; Enable automatic indentation
-                                        ;(electric-indent-mode t)
-;(setq-default standard-indent 2)
-;(setq-default indent-tabs-mode nil)
+;(electric-indent-mode t)
+(setq-default standard-indent 2)
+(setq-default indent-tabs-mode nil)
 (add-hook 'org-mode-hook (lambda () (electric-indent-local-mode -1)))
+
+(defun show-current-time ()
+  "Show current time."
+  (interactive)
+  (message (current-time-string)))
 
 ;; Automatically pair parentheses
 (electric-pair-mode t)
