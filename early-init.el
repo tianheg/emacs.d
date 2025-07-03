@@ -1,8 +1,18 @@
-;; (setq package-enable-at-startup nil)
-;; don't GC during startup to save time, emacs-init-time from 0.015984 to 0.008002
-(unless (bound-and-true-p my-computer-has-smaller-memory-p)
-  (setq gc-cons-percentage 0.6)
-  (setq gc-cons-threshold most-positive-fixnum))
+(setq gc-cons-threshold (* 1024 1024 100) ;; 100m
+      read-process-output-max (* 4 1024 1024)
+      gc-cons-percentage 0.6)
+
+(setq default-frame-alist
+      '((menu-bar-lines . 0)
+        (tool-bar-lines . 0)
+        (horizontal-scroll-bars)
+        (vertical-scroll-bars)))
+
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+(add-to-list 'default-frame-alist '(undecorated . t))
+
+(setq frame-inhibit-implied-resize t)
+
+(setenv "LSP_USE_PLISTS" "true")
 
 (provide 'early-init)
-
