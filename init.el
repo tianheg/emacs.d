@@ -229,11 +229,10 @@
   :bind (:map markdown-mode-map
          ("C-c C-e" . markdown-do)))
 
-(use-package org
-  :hook ((org-mode . visual-line-mode))
-  :custom
-  (org-startup-truncated nil))
-
 ;; https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
 (setq custom-file (locate-user-emacs-file "custom.el"))
 (load custom-file :no-error-if-file-is-missing)
+
+(require 'init-org)
+
+(provide 'init)
