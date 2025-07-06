@@ -1,0 +1,26 @@
+* emacs.d
+
+** Install latest Orgmode
+
+1. Clone Orgmode repo
+
+#+BEGIN_SRC sh
+cd ~/.emacs.d/lisp
+git clone https://git.sr.ht/~bzg/org-mode
+cd org-mode
+make autoloads
+#+END_SRC
+
+2. Config Emacs to use local Orgmode
+
+#+BEGIN_SRC emacs-lisp
+(use-package org
+  :load-path "lisp/org-mode/lisp"
+  ...
+)
+#+END_SRC
+
+** Help links
+
+- https://www.gnu.org/software/emacs/refcards/pdf/refcard.pdf
+- https://www.emacswiki.org/emacs/OrgMode

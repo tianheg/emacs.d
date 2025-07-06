@@ -10,9 +10,8 @@
   :defer t)
 
 (use-package org
-  :pin nongnu
+  :load-path "lisp/org-mode/lisp"
   :mode (("\\.org\\'" . org-mode))
-  :ensure org-contrib
   :bind
   (("M-p" . org-previous-visible-heading)
 	  ("M-n" . org-next-visible-heading)
@@ -101,5 +100,10 @@
 (use-package org-appear
   :ensure t
   :hook (org-mode . org-appear-mode))
+
+;; Load org-contrib separately when using local org installation
+(use-package org-contrib
+  :ensure t
+  :after org)
 
 (provide 'init-document)
