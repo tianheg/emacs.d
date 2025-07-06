@@ -9,6 +9,11 @@
   :ensure t
   :defer t)
 
+(use-package yasnippet
+  :ensure t
+  :config
+  (yas-global-mode 1))
+
 (use-package org
   :load-path "lisp/org-mode/lisp"
   :mode (("\\.org\\'" . org-mode))
