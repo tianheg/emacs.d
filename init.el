@@ -17,14 +17,12 @@
 (add-to-list 'load-path "~/.emacs.d/core/")
 
 (require 'init-base)
-(require 'init-ui)
-(require 'init-modern)
-(require 'init-enhance)
 (require 'init-document)
-(require 'init-lang)
-(require 'init-config)
+(require 'init-enhance)
 (require 'init-feed)
 (require 'init-keymap)
+(require 'init-modern)
+(require 'init-ui)
 
 (setq custom-file "~/.emacs.d/custom.el")
 (when (file-exists-p custom-file)
