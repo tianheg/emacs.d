@@ -54,7 +54,6 @@ Uses `current-date-time-format' for the formatting the date/time."
     ("b" switch-to-buffer "switch buffer" :exit t)
     ("'" show-file-name "file name" :exit t)
     ("n" display-line-numbers-mode "absolute line number")
-    ("N" linum-relative-toggle "relative line number")
     ("u" revert-buffer "revert buffer" :exit t)
 	("j" consult-goto-line "goto line" :exit t)
 

@@ -60,15 +60,6 @@
   (display-fill-column-indicator-column 120)
   (display-fill-column-indicator-character ?\u2502))
 
-(use-package linum-relative
-  :ensure t
-  :config
-  (setq linum-relative-backend 'display-line-numbers-mode))
-
-;; (use-package git-gutter+
-;;   :ensure t
-;;   :bind ("<f8> g" . git-gutter+-mode))
-
 ;; https://github.com/purcell/exec-path-from-shell/issues/36
 (use-package exec-path-from-shell
   :ensure t
