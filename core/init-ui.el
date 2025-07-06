@@ -55,9 +55,8 @@
   (setq dashboard-set-file-icons t)
   :config
   (setq dashboard-projects-backend 'project-el
-        dashboard-items '((projects . 8)
-                          (recents . 8)
-                          ;; (agenda . 8)
+        dashboard-items '((recents . 8)
+                          (agenda . 8)
 						  )
         dashboard-banner-logo-title "你今天快乐了吗？"
         dashboard-footer-messages '("https://github.com/tianheg/emacs.d")
