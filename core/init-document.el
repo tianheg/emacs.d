@@ -14,8 +14,8 @@
   :pin nongnu
   :mode (("\\.org\\'" . org-mode))
   :ensure org-contrib
-  :bind (("M-[" . org-previous-visible-heading)
-		 ("M-]" . org-next-visible-heading))
+  :bind (("M-p" . org-previous-visible-heading)
+	  ("M-n" . org-next-visible-heading))
   :init
   (setq org-ellipsis " ▾"
         org-adapt-indentation nil
