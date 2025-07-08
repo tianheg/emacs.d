@@ -14,6 +14,12 @@
   :config
   (yas-global-mode 1))
 
+(use-package server
+  :ensure nil
+  :config
+  (unless (server-running-p)
+    (server-start)))
+
 (use-package org
   :load-path "lisp/org-mode/lisp"
   :mode (("\\.org\\'" . org-mode))
@@ -31,9 +37,16 @@
 		org-hide-emphasis-markers t
 		org-startup-folded t
     org-capture-templates nil
-    org-agenda-files '("~/Documents/daily/")
+    org-agenda-files '("~/Documents/daily/2025.org")
+    org-protocol-default-template-key "w"
     )
   :config
+  (require 'org-protocol)
+  (setq org-capture-templates
+          ;; Insert content at the very top of the file
+        '(("w" "Web capture" plain (file "~/Documents/online-reading-list/README.org")
+           "- [[%:link][%:description]]"
+           :prepend t)))
   ;; GTD setting
   (require 'org-inlinetask)
   (setq org-todo-keywords
@@ -106,7 +119,6 @@
   :ensure t
   :hook (org-mode . org-appear-mode))
 
-;; Load org-contrib separately when using local org installation
 (use-package org-contrib
   :ensure t
   :after org)
