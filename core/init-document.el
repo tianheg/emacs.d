@@ -44,7 +44,7 @@
   (require 'org-protocol)
   (setq org-capture-templates
           ;; Insert content at the very top of the file
-        '(("w" "Web capture" plain (file "~/Documents/online-reading-list/README.org")
+        '(("w" "Web capture" plain (file "~/Documents/read/online-reading-list/README.org")
            "- [[%:link][%:description]]"
            :prepend t)))
   ;; GTD setting
