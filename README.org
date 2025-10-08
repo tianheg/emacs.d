@@ -24,3 +24,4 @@ make autoloads
 
 - https://www.gnu.org/software/emacs/refcards/pdf/refcard.pdf
 - https://www.emacswiki.org/emacs/OrgMode
+- https://github.com/zhangjie2012/emacs.d
