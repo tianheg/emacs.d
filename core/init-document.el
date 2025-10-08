@@ -131,4 +131,14 @@
 			(lambda ()
               (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
 
+(use-package beancount
+  :ensure t
+  :mode (("\\.beancount\\'" . beancount-mode))
+  :config
+  ;; Optional: Set beancount-check-program if you have beancount installed
+  ;; (setq beancount-check-program "bean-check")
+  ;; Optional: Enable transaction highlighting
+  ;; (setq beancount-highlight-transaction-at-point t)
+  )
+
 (provide 'init-document)
