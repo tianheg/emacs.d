@@ -45,42 +45,6 @@
 
 (global-hl-line-mode +1)
 
-(use-package dashboard
-  :ensure t
-  :after (nerd-icons)
-  :init
-  (setq dashboard-display-icons-p t)
-  (setq dashboard-icon-type 'nerd-icons)
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t)
-  :config
-  (setq dashboard-projects-backend 'project-el
-        dashboard-items '((recents . 8)
-                          (agenda . 8)
-						  )
-        dashboard-banner-logo-title "你今天快乐了吗？"
-        dashboard-footer-messages '("https://github.com/tianheg/emacs.d")
-        dashboard-image-banner-max-height 160
-        dashboard-set-navigator t
-        dashboard-set-footer nil
-        dashboard-show-shortcuts nil)
-  (setq dashboard-agenda-tags-format 'ignore
-        dashboard-agenda-sort-strategy '(priority-down)
-        dashboard-week-agenda t)
-  (setq dashboard-navigator-buttons
-        `((;; homepage
-           (,(nerd-icons-octicon "nf-oct-home" :height 1.0 :v-adjust 0.0)
-            "Homepage"
-            "Go to homepage"
-            (lambda (&rest _) (browse-url "https://tianheg.co/")))
-           ;; Github
-           (,(nerd-icons-octicon "nf-oct-mark_github" :height 1.0 :v-adjust 0.0)
-            "Github"
-            "Go to github"
-            (lambda (&rest _) (browse-url "https://github.com/tianheg")))
-           )))
-  (dashboard-setup-startup-hook))
-
 (use-package ansi-color
   :ensure t
   :hook (compilation-filter . ansi-color-compilation-filter))
