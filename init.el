@@ -19,7 +19,6 @@
 (require 'init-base)
 (require 'init-document)
 (require 'init-enhance)
-(require 'init-feed)
 (require 'init-keymap)
 (require 'init-modern)
 (require 'init-ui)
