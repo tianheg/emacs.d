@@ -16,7 +16,7 @@
 (ad-activate 'align-regexp)
 
 (save-place-mode t)
-(setq-default tab-width 4)
+(setq-default tab-width 2)
 
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)
