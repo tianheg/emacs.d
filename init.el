@@ -1,8 +1,8 @@
 (require 'package)
 (setq package-archives
-      '(("gnu" . "https://mirrors.ustc.edu.cn/elpa/gnu/")
-        ("melpa" . "https://mirrors.ustc.edu.cn/elpa/melpa/")
-        ("nongnu" . "https://mirrors.ustc.edu.cn/elpa/nongnu/")))
+      '(("gnu"    . "https://elpa.liujiacai.net/gnu/")
+        ("nongnu" . "https://elpa.liujiacai.net/nongnu/")
+        ("melpa"  . "https://elpa.liujiacai.net/melpa/")))
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
