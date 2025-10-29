@@ -21,7 +21,7 @@
     (server-start)))
 
 (use-package org
-  :load-path "lisp/org-mode/lisp"
+  :load-path "elpa/org-mode/lisp"
   :mode (("\\.org\\'" . org-mode))
   :bind
   (("M-p" . org-previous-visible-heading)
@@ -118,6 +118,11 @@
 (use-package org-appear
   :ensure t
   :hook (org-mode . org-appear-mode))
+
+(use-package org-grapher
+  :load-path "lisp/org-grapher"
+  :config
+  (setq org-grapher-notes-directory "~/Documents/daily/"))
 
 (use-package org-contrib
   :ensure t
