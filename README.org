@@ -1,11 +1,11 @@
-* emacs.d - TIL
+* emacs.d
 
-** Install latest Orgmode
+** Install latest Orgmode [[https://cgit.git.savannah.gnu.org/cgit/emacs/org-mode.git/tree/etc/ORG-NEWS][Changelog]]
 
 1. Clone Orgmode repo
 
 #+BEGIN_SRC sh
-cd ~/.emacs.d/lisp
+cd ~/.emacs.d/elpa
 git clone https://git.sr.ht/~bzg/org-mode
 cd org-mode
 make autoloads
@@ -15,7 +15,7 @@ make autoloads
 
 #+BEGIN_SRC emacs-lisp
 (use-package org
-  :load-path "lisp/org-mode/lisp"
+  :load-path "elpa/org-mode/lisp"
   ...
 )
 #+END_SRC
