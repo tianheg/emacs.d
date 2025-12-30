@@ -16,7 +16,11 @@
 (ad-activate 'align-regexp)
 
 (save-place-mode t)
+
+;; space over tab
+(setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
+(electric-indent-mode 1)
 
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)
@@ -26,7 +30,6 @@
 (column-number-mode 1)
 
 (electric-pair-mode 1)
-(electric-indent-mode 1)
 
 (setq inhibit-startup-echo-area-message t
       inhibit-startup-message t
