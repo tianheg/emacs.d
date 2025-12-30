@@ -1,14 +1,18 @@
+;;; init-keymap.el --- Keybindings and custom functions -*- lexical-binding: t -*-
+
+;;; Code:
+
+;; --- Custom Functions ---
 (defvar current-date-time-format "%Y-%m-%d %H:%M:%S"
-  "Format of date to insert with `insert-current-date-time' func
-See help of `format-time-string' for possible replacements")
+  "Format of date to insert with `insert-current-date-time'.")
 
 (defun insert-current-date-time ()
-  "insert the current date and time into current buffer.
-Uses `current-date-time-format' for the formatting the date/time."
+  "Insert the current date and time into current buffer."
   (interactive)
-  (insert (format-time-string current-date-time-format (current-time)))
-  )
+  (insert (format-time-string current-date-time-format)))
+
 (defun toggle-frame-alpha ()
+  "Toggle frame transparency."
   (interactive)
   (let* ((pair (or (frame-parameter nil 'alpha) '(100 100)))
          (alpha (apply '+ pair)))
@@ -16,58 +20,70 @@ Uses `current-date-time-format' for the formatting the date/time."
                          'alpha
                          (if (or (null alpha) (eq alpha 200) (eq alpha 2.0))
                              '(85 60) '(100 100)))))
+
 (defun show-file-name ()
   "Show the full path file name in the minibuffer."
   (interactive)
   (message (buffer-file-name)))
 
 (defun match-paren (arg)
-    "Go to the matching paren if on a paren; otherwise insert %."
-    (interactive "p")
-    (cond ((looking-at "\\s(") (forward-list 1) (backward-char 1))
-	      ((looking-at "\\s)") (forward-char 1) (backward-list 1))
-	      (t (self-insert-command (or arg 1)))))
+  "Go to the matching paren if on a paren; otherwise insert %."
+  (interactive "p")
+  (cond ((looking-at "\\s(") (forward-list 1) (backward-char 1))
+        ((looking-at "\\s)") (forward-char 1) (backward-list 1))
+        (t (self-insert-command (or arg 1)))))
 
+;; --- Global Keybindings ---
 (use-package emacs
   :ensure nil
-  :init
-  (global-set-key (kbd "C-2") 'set-mark-command) ;; actual is C-@
-  (global-set-key (kbd "C-x k") 'kill-this-buffer) ;; kill-this-buffer replace kill-buffer
-  (global-set-key (kbd "M-*") 'match-paren)
-  (global-set-key (kbd "S-<backspace>") 'kill-whole-line))
+  :bind (("C-2" . set-mark-command)
+         ("C-x k" . kill-current-buffer)
+         ("M-*" . match-paren)
+         ("S-<backspace>" . kill-whole-line)))
 
+;; --- Hydra ---
 (use-package hydra
   :ensure t
+  :bind ("<f9>" . hydra-default/body)
   :config
-  (defhydra hydra-default
-    (:hint nil :idle 1)
+  (defhydra hydra-default (:hint nil :idle 1)
+    "
+^Edit^                ^Buffer^              ^Window^              ^Other^
+^^^^^^^^---------------------------------------------------------------------------
+_r_: replace string   _f_: find file        _1_: delete other     _ti_: toggle column
+_w_: save buffer      _b_: switch buffer    _2_: split below      _m_: imenu
+_o_: outline          _'_: file name        _3_: split right      _M_: consult outline
+_s_: search buffer    _n_: line numbers     _x_: fullscreen       _c_: eshell
+_e_: ripgrep          _u_: revert buffer    _X_: toggle alpha     _q_: quit
+_i_: insert date      _j_: goto line
+_l_: align text
+"
+    ("r" replace-string)
+    ("w" save-buffer)
+    ("o" consult-outline)
+    ("s" consult-line)
+    ("e" consult-ripgrep)
+    ("i" insert-current-date-time)
+    ("l" align-regexp)
 
-    ("r" replace-string "replace string" :exit t :column "1. edit")
-    ("w" save-buffer "save buffer" :exit t)
-    ("o" consult-outline "outline" :exit t)
-    ("s" consult-line "search buffer" :exit t)
-    ("e" consult-ripgrep "ripgrep project" :exit t)
-    ("i" insert-current-date-time "insert date time" :exit t)
-    ("l" align-regexp "align text" :exit t)
+    ("f" find-file)
+    ("b" switch-to-buffer)
+    ("'" show-file-name)
+    ("n" display-line-numbers-mode)
+    ("u" revert-buffer)
+    ("j" consult-goto-line)
 
-    ("f" find-file "find file" :exit t :column "2. buffer")
-    ("b" switch-to-buffer "switch buffer" :exit t)
-    ("'" show-file-name "file name" :exit t)
-    ("n" display-line-numbers-mode "absolute line number")
-    ("u" revert-buffer "revert buffer" :exit t)
-	("j" consult-goto-line "goto line" :exit t)
+    ("1" delete-other-windows)
+    ("2" split-window-below)
+    ("3" split-window-horizontally)
+    ("x" toggle-frame-fullscreen)
+    ("X" toggle-frame-alpha)
 
-    ("1" delete-other-windows "delete other" :exit t :column "3. window management")
-    ("2" split-window-below "split below" :exit t )
-    ("3" split-window-horizontally "split horizontally" :exit t)
-    ("x" toggle-frame-fullscreen "toggle fullscreen" :exit t)
-    ("X" toggle-frame-alpha "toggle alpha" :exit t)
-
-    ("ti" display-fill-column-indicator-mode "toggle column indicator" :column "x. other")
-    ("m" consult-imenu "imenu" :exit t)
-    ("M" consult-outline "consult outline" :exit t)
-    ("c" eshell "open eshell" :exit t)
-    ("q" nil "quit"))
-  (global-set-key (kbd "<f9>") 'hydra-default/body))
+    ("ti" display-fill-column-indicator-mode)
+    ("m" consult-imenu)
+    ("M" consult-outline)
+    ("c" eshell)
+    ("q" nil :exit t)))
 
 (provide 'init-keymap)
+;;; init-keymap.el ends here

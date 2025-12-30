@@ -1,9 +1,6 @@
-(use-package whitespace
-  :pin manual
-  :ensure t
-  :demand
-  :init
-  (add-hook 'before-save-hook 'delete-trailing-whitespace))
+;;; init-tools.el --- Productivity tools -*- lexical-binding: t -*-
+
+;;; Code:
 
 (use-package avy
   :ensure t
@@ -12,10 +9,10 @@
          ("M-s i" . avy-goto-char)
          ("M-s k" . avy-copy-line))
   :config
-  (setq avy-case-fold-search nil)
-  (setq avy-keys (number-sequence ?a ?z))
-  (setq avy-highlight-first t)
-  (setq avy-background t))
+  (setq avy-case-fold-search nil
+        avy-keys (number-sequence ?a ?z)
+        avy-highlight-first t
+        avy-background t))
 
 (use-package project
   :ensure nil
@@ -23,18 +20,18 @@
          ("<f8> p" . project-switch-project)
          ("<f8> k" . project-kill-buffers)
          ("<f8> b" . project-switch-to-buffer)
-		 ("<f8> c" . project-compile)))
+         ("<f8> c" . project-compile)))
 
 (use-package expand-region
   :ensure t
   :bind (("M-m" . er/expand-region)
-	     ("M-s s" . er/mark-symbol)
-	     ("M-s p" . er/mark-outside-pairs)
-	     ("M-s P" . er/mark-inside-pairs)
-	     ("M-s q" . er/mark-outside-quotes)
-	     ("M-s m" . er/mark-comment)
-	     ("M-s Q" . er/mark-inside-quotes)
-	     ("M-s f" . er/mark-defun)))
+         ("M-s s" . er/mark-symbol)
+         ("M-s p" . er/mark-outside-pairs)
+         ("M-s P" . er/mark-inside-pairs)
+         ("M-s q" . er/mark-outside-quotes)
+         ("M-s m" . er/mark-comment)
+         ("M-s Q" . er/mark-inside-quotes)
+         ("M-s f" . er/mark-defun)))
 
 (use-package multiple-cursors
   :ensure t
@@ -54,18 +51,6 @@
   :config
   (which-key-setup-minibuffer))
 
-(use-package display-fill-column-indicator
-  :pin manual
-  :custom
-  (display-fill-column-indicator-column 120)
-  (display-fill-column-indicator-character ?\u2502))
-
-;; https://github.com/purcell/exec-path-from-shell/issues/36
-(use-package exec-path-from-shell
-  :ensure t
-  :when (eq system-type 'darwin)
-  :hook (after-init . exec-path-from-shell-initialize))
-
 (use-package magit
   :ensure t
   :bind (("M-s ," . magit-status))
@@ -78,11 +63,8 @@
   :config
   (set-fontset-font t 'emoji (font-spec :family "Apple Color Emoji") nil 'prepend)
   :custom
-  (fanyi-providers '(;; 海词
-                     fanyi-haici-provider
-                     ;; 有道同义词词典
+  (fanyi-providers '(fanyi-haici-provider
                      fanyi-youdao-thesaurus-provider
-                     ;; longman
                      fanyi-longman-provider)))
 
 (use-package keyfreq
@@ -119,4 +101,5 @@
   (keyfreq-mode 1)
   (keyfreq-autosave-mode 1))
 
-(provide 'init-modern)
+(provide 'init-tools)
+;;; init-tools.el ends here

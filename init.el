@@ -1,3 +1,8 @@
+;;; init.el --- Initialization entry point -*- lexical-binding: t -*-
+
+;;; Code:
+
+;; --- Package Setup ---
 (require 'package)
 (setq package-archives
       '(("gnu"    . "https://elpa.liujiacai.net/gnu/")
@@ -9,21 +14,27 @@
   (package-install 'use-package))
 
 (eval-and-compile
-  (setq use-package-compute-statistics t))
+  (setq use-package-always-ensure t
+        use-package-compute-statistics t))
 
 (eval-when-compile
   (require 'use-package))
 
-(add-to-list 'load-path "~/.emacs.d/core/")
+;; --- Load Path ---
+(add-to-list 'load-path (expand-file-name "core" user-emacs-directory))
 
+;; --- Modules ---
 (require 'init-base)
-(require 'init-document)
+(require 'init-ui)
 (require 'init-enhance)
+(require 'init-document)
+(require 'init-tools)
 (require 'init-keymap)
 (require 'init-media)
-(require 'init-modern)
-(require 'init-ui)
 
-(setq custom-file "~/.emacs.d/custom.el")
+;; --- Custom File ---
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
-  (load custom-file))
+  (load custom-file 'noerror))
+
+;;; init.el ends here

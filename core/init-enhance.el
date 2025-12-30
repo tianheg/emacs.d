@@ -1,3 +1,7 @@
+;;; init-enhance.el --- Enhancement packages -*- lexical-binding: t -*-
+
+;;; Code:
+
 (use-package marginalia
   :ensure t
   :init
@@ -81,4 +85,10 @@
              ("j" . dired-next-line)
              ("k" . dired-previous-line)))
 
+(use-package yasnippet
+  :ensure t
+  :config
+  (yas-global-mode 1))
+
 (provide 'init-enhance)
+;;; init-enhance.el ends here
