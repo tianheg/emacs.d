@@ -6,7 +6,7 @@
 
 #+BEGIN_SRC sh
 cd ~/.emacs.d/elpa
-git clone https://git.sr.ht/~bzg/org-mode
+git clone https://git.savannah.gnu.org/git/emacs/org-mode.git
 cd org-mode
 make autoloads
 #+END_SRC
