@@ -108,7 +108,8 @@
 	 (css . t)
 	 (js . t)
 	 (org . t)
-	 (python . t)))
+	 (python . t)
+	 (shell . t)))
   )
 
 (use-package toc-org
