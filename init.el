@@ -20,6 +20,7 @@
 (require 'init-document)
 (require 'init-enhance)
 (require 'init-keymap)
+(require 'init-media)
 (require 'init-modern)
 (require 'init-ui)
 
