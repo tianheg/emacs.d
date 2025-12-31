@@ -1,0 +1,12 @@
+# -*- coding: utf-8; mode: snippet -*-
+# name: add unread book to read repo
+# key: UR
+# --
+---
+status: unread
+trigger: $1
+domain: a,b
+isbn: xx # Goto https://openlibrary.org/ find it
+---
+
+# 书名 by 作者
