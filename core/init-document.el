@@ -6,7 +6,7 @@
 ;;; Code:
 
 ;; --- Variables ---
-(defvar my/org-daily-file "~/Documents/daily/2025.org"
+(defvar my/org-daily-file "~/Documents/daily/2026.org"
   "Path to the main daily org file.")
 
 (defvar my/org-notes-directory "~/Documents/daily/"
